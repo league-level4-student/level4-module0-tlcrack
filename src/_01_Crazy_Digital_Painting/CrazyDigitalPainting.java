@@ -33,5 +33,7 @@ final static int height=1000;
 	
 	public static void main(String[] args) {
 		new CrazyDigitalPainting();
+		ColorArrayDisplayer cad = new ColorArrayDisplayer();
+		cad.displayColorsAsImage(CrazyDigitalPainting.colors);
 	}
 }
