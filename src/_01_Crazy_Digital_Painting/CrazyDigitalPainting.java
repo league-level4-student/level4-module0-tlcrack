@@ -10,7 +10,7 @@ final static int height=1000;
 	//2. Create a 2D array of Color objects. You will need to import
 	//java.awt.Color. Initialize the size of the array using the 
 	//integers created in step 1.
-	Color[][] colors = new Color[width][height];
+	static Color[][] colors = new Color[width][height];
 	
 	
 	public CrazyDigitalPainting() {
@@ -22,7 +22,7 @@ final static int height=1000;
 		//   colors[i][j] = new Color(i % 256, (i * j) % 256, j % 256);
 		for(int i = 0; i<colors.length; i++) {
 			for(int j = 0; j<colors[i].length; j++) {
-				colors[i][j] = new Color(i % 256, (i * j) % 256, j % 256);
+				colors[i][j] = new Color((j+i*3) % 256, (i +j*2^6) % 256, (8*i+j+7)%256);
 			}
 		}
 		//5. Come up with your own pattern to make a cool crazy image.
@@ -33,7 +33,6 @@ final static int height=1000;
 	
 	public static void main(String[] args) {
 		new CrazyDigitalPainting();
-		ColorArrayDisplayer cad = new ColorArrayDisplayer();
-		cad.displayColorsAsImage(CrazyDigitalPainting.colors);
+		ColorArrayDisplayer cad = new ColorArrayDisplayer(colors);
 	}
 }
