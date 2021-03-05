@@ -63,7 +63,7 @@ public class GridPanel extends JPanel{
 		//   Then, use drawRect to add a grid pattern to your display.
 		for(int i = 0; i<pixels.length;i++) {
 			for(int j = 0; j<pixels[i].length;j++) {
-				g.setColor(color);
+				g.setColor(pixels[i][j].color);
 				g.fillRect(pixels[i][j].x,pixels[i][j].y,pixelWidth,pixelHeight);
 			}
 		}
