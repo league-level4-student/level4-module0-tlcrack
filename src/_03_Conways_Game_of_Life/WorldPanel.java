@@ -46,11 +46,14 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 	public void randomizeCells() {
 		// 4. Iterate through each cell and randomly set each
-		// cell's isAlive memeber to true of false
+		// cell's isAlive member to true of false
 		for (int i = 0; i < cells.length; i++) {
 			for (int j = 0; j < cells[i].length; j++) {
 				if (r.nextBoolean() == false) {
 					cells[i][j].isAlive = false;
+				}
+				else {
+					cells[i][j].isAlive = true;
 				}
 
 			}
@@ -102,7 +105,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		// . using the getLivingNeighbors method.
 		int[][] livingNeighbors = new int[cellsPerRow][cellsPerRow];
 		for (int i = 0; i < cells.length; i++) {
-			for (int j = 0; j < cells[i].length; i++) {
+			for (int j = 0; j < cells[i].length; j++) {
 				livingNeighbors[i][j] = getLivingNeighbors(i, j);
 			}
 		}
@@ -110,7 +113,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		// 8. check if each cell should live or die
 
 		for (int i = 0; i < cells.length; i++) {
-			for (int j = 0; j < cells[i].length; i++) {
+			for (int j = 0; j < cells[i].length; j++) {
 				cells[i][j].liveOrDie(getLivingNeighbors(i, j));
 			}
 		}
@@ -133,27 +136,36 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 			if (cells[x - 1][y].isAlive) {
 				nearby += 1;
 			}
-			if (cells[x - 1][y + 1].isAlive) {
-				nearby += 1;
+			if(y<cellsPerRow-1) {
+				if (cells[x - 1][y + 1].isAlive) {
+					nearby += 1;
+				}
 			}
 		}
 		if (y > 0) {
 			if (cells[x][y - 1].isAlive) {
 				nearby += 1;
 			}
-			if (cells[x + 1][y - 1].isAlive) {
+			if(x<cellsPerRow-1) {
+				if (cells[x + 1][y - 1].isAlive) {
+					nearby += 1;
+				}
+			}
+		}
+		if(y<cellsPerRow-1) {
+			if (cells[x][y + 1].isAlive) {
 				nearby += 1;
 			}
 		}
-
-		if (cells[x][y + 1].isAlive) {
-			nearby += 1;
-		}
-		if (cells[x + 1][y].isAlive) {
-			nearby += 1;
-		}
-		if (cells[x + 1][y + 1].isAlive) {
-			nearby += 1;
+		if(x<cellsPerRow-1) {
+			if (cells[x + 1][y].isAlive) {
+				nearby += 1;
+			}
+			if(y<cellsPerRow-1) {
+				if (cells[x + 1][y + 1].isAlive) {
+						nearby += 1;
+				}
+			}
 		}
 		return nearby;
 	}

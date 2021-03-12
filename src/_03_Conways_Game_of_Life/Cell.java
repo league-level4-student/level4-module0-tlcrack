@@ -17,7 +17,7 @@ public class Cell implements Drawable{
 		this.cellSize = size;
 	}
 	
-	//11. Complete tue liveOrDie method
+	//11. Complete the liveOrDie method
 	//    It sets isAlive to true or false based on the neighbors and 
 	//the rules of the game
 	/*
@@ -29,7 +29,6 @@ public class Cell implements Drawable{
 	 * */
 	public void liveOrDie(int numNeighbors) {
 		if(isAlive==true&&numNeighbors<2) {isAlive=false;}
-		if(isAlive==true&&numNeighbors>=2&&numNeighbors<=3) {isAlive=true;}
 		if(isAlive==true&&numNeighbors>3) {isAlive=false;}
 		if(isAlive==false&&numNeighbors==3) {isAlive=true;}
 	}
