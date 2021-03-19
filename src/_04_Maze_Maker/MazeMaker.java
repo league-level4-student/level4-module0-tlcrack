@@ -24,7 +24,9 @@ public class MazeMaker{
 		//4. select a random cell to start
 		int i = randGen.nextInt(w);
 		int j = randGen.nextInt(h);
-		
+
+		maze.cells[0][randGen.nextInt(maze.getWidth())].setWestWall(false);
+		maze.cells[w-1][randGen.nextInt(maze.getWidth())].setEastWall(false);
 		//5. call selectNextPath method with the randomly selected cell
 		selectNextPath(maze.cells[i][j]);
 		
@@ -71,20 +73,20 @@ public class MazeMaker{
 	//   If they are, the walls between them are removed.
 	private static void removeWalls(Cell c1, Cell c2) {
 		if(c1.getX()-1==c2.getX()&&c1.getY()==c2.getY()) {
-			c1.setNorthWall(false);
-			c2.setSouthWall(false);
-		}
-		if(c1.getX()==c2.getX()-1&&c1.getY()==c2.getY()) {
-			c1.setSouthWall(false);
-			c2.setNorthWall(false);
-		}
-		if(c1.getY()-1==c2.getY()&&c1.getX()==c2.getX()) {
 			c1.setWestWall(false);
 			c2.setEastWall(false);
 		}
-		if(c1.getY()==c2.getY()-1&&c1.getX()==c2.getX()) {
+		else if(c1.getX()==c2.getX()-1&&c1.getY()==c2.getY()) {
 			c1.setEastWall(false);
 			c2.setWestWall(false);
+		}
+		else if(c1.getY()-1==c2.getY()&&c1.getX()==c2.getX()) {
+			c1.setNorthWall(false);
+			c2.setSouthWall(false);
+		}
+		else if(c1.getY()==c2.getY()-1&&c1.getX()==c2.getX()) {
+			c1.setSouthWall(false);
+			c2.setNorthWall(false);
 		}
 	}
 	
