@@ -3,18 +3,32 @@ package _02_Pixel_Art;
 import java.awt.FlowLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 public class PixelArtMaker implements MouseListener{
 	private JFrame window;
+	private JButton save;
+	private JButton load;
+	
 	private GridInputPanel gip;
 	private GridPanel gp;
 	ColorSelectionPanel csp;
 	
+	private static final String fileName = "src/_02_Pixel_Art/saved.dat";
+	
 	public void start() {
 		gip = new GridInputPanel(this);	
 		window = new JFrame("Pixel Art");
+		save = new JButton();
+		load = new JButton();
 		window.setLayout(new FlowLayout());
 		window.setResizable(false);
 		
@@ -30,8 +44,14 @@ public class PixelArtMaker implements MouseListener{
 		window.remove(gip);
 		window.add(gp);
 		window.add(csp);
+		window.add(save);
+		window.add(load);
+		save.setText("Save Image");
+		load.setText("Load Image");
 		gp.repaint();
 		gp.addMouseListener(this);
+		save.addMouseListener(this);
+		load.addMouseListener(this);
 		window.pack();
 	}
 	
@@ -45,10 +65,18 @@ public class PixelArtMaker implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		if(e.getSource().equals(save)) {
+			save(gp);
+		}
+		else if(e.getSource().equals(load)) {
+			gp = load();
+		}
+		else {
 		gp.setColor(csp.getSelectedColor());
 		System.out.println(csp.getSelectedColor());
 		gp.clickPixel(e.getX(), e.getY());
 		gp.repaint();
+		}
 	}
 
 	@Override
@@ -61,5 +89,29 @@ public class PixelArtMaker implements MouseListener{
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+	}
+	
+	private static void save(GridPanel data) {
+		try (FileOutputStream fos = new FileOutputStream(new File(fileName));
+				ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+			oos.writeObject(data);
+			System.out.println("hello");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	private static GridPanel load() {
+		try (FileInputStream fis = new FileInputStream(new File(fileName));
+				ObjectInputStream ois = new ObjectInputStream(fis)) {
+			return (GridPanel) ois.readObject();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		} catch (ClassNotFoundException e) {
+			// This can occur if the object we read from the file is not
+			// an instance of any recognized class
+			e.printStackTrace();
+			return null;
+		}
 	}
 }
